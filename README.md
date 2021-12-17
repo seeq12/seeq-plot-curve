@@ -2,7 +2,7 @@
 
 Plot Curve is a Seeq Add-On for fitting curves to tabular data, and pushing the resulting formulas to Seeq Workbench.
 
-![drawing](_static/plot-curve-screenshot.png)
+![drawing](https://github.com/seeq12/seeq-plot-curve/blob/main/_static/plot-curve-screenshot.png?raw=true)
 ----
 # Installation
 
