@@ -1,0 +1,14 @@
+Curve,Power,Efficiency,Noise
+,hp,%,dB
+Surge Line,0,80,50
+,15,81.5,51
+,25,82,53
+,50,75,55
+Choke Line,0,81,55
+Choke Line,15,82,60
+Choke Line,25,82,65
+Choke Line,50,80,75
+Safety Margin Choke Line,0,80,70
+Safety Margin Choke Line,15,83,75
+Safety Margin Choke Line,25,76,80
+Safety Margin Choke Line,50,50,90

@@ -1,0 +1,7 @@
+include LICENSE
+global-exclude *.pyc
+global-exclude .ipynb_checkpoints
+graft seeq/addons/plot_curve/deployment_notebook
+graft seeq/addons/plot_curve/ui_components/templates
+graft _static
+prune tests
