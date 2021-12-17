@@ -80,4 +80,4 @@ TEST*.xml
 *.ipynb_checkpoints*
 
 # development notebook
-developer_notebook.ipynb
+/developer_notebook.ipynb
