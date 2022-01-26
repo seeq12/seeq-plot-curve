@@ -2,7 +2,7 @@
 
 Plot Curve is a Seeq Add-On for fitting curves to tabular data, and pushing the resulting formulas to Seeq Workbench.
 
-![drawing](https://github.com/seeq12/seeq-plot-curve/blob/main/_static/plot-curve-screenshot.png?raw=true)
+![drawing](https://github.com/seeq12/seeq-plot-curve/blob/main/docs/_static/step_3.png?raw=true)
 ----
 # Installation
 
@@ -62,10 +62,20 @@ Finally, start a jupyter server and navigate to the development notebook in the 
 $ jupyter notebook
 ```
 
+Documentation can be updated by editing the source files in docs/src/source, and then using the provided bat file to
+generate the documentation in the docs folder, i.e.:
+
+```sh
+$ make.bat github
+```
+
+
 # Important links
 
 * Official source code repo: https://github.com/seeq12/seeq-plot-curve
-* Issue tracker (bugs, feature requests, etc. ) : https://github.com/seeq12/seeq-plot-curve/issues
+* Official documentation : https://seeq12.github.io/seeq-plot-curve/
+* Change Log : https://seeq12.github.io/seeq-plot-curve/changelog.html
+* Issue tracker (bugs, feature requests, etc.) : https://github.com/seeq12/seeq-plot-curve/issues
 
 ----
 
@@ -75,7 +85,7 @@ Please cite this work as:
 
 ```shell
 seeq-plot-curve
-Seeq Corporation, 2021
+Seeq Corporation, 2022
 https://github.com/seeq12/seeq-plot-curve
 ```
 
