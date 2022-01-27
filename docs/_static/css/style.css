@@ -6,4 +6,8 @@
  */
 
 /* This line is theme specific - it includes the base theme CSS */
-@import '../nature.css';  /* for Alabaster */
+/*@import '../nature.css';  /* for Alabaster */
+
+.wy-nav-content {
+    max-width: 1000px !important;
+}

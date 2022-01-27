@@ -66,13 +66,8 @@ html_static_path = ['_static']
 html_favicon = '_static/seeq-favicon.ico'
 html_logo = '_static/Seeq_logo_darkBlue_sm.png'
 
-from sphinx.builders.html import StandaloneHTMLBuilder
-StandaloneHTMLBuilder.supported_image_types = ['image/gif', 'image/svg+xml', 'image/png', 'image/jpeg']
-
 # # These paths are either relative to html_static_path
 # # or fully qualified paths (eg. https://...)
-# html_css_files = [
-#     'css/style.css',
-# ]
+html_css_files = ['css/style.css']
 #
 # html_style = 'css/style.css'

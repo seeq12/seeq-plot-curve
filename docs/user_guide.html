@@ -4,9 +4,10 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; seeq-plot-curve 0.0.0 documentation</title>
+  <title>User Guide &mdash; seeq-plot-curve 0.1.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/style.css" type="text/css" />
     <link rel="shortcut icon" href="_static/seeq-favicon.ico"/>
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
@@ -32,7 +33,7 @@
             <img src="_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.0.0
+                0.1.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -47,12 +48,11 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#the-problem">The Problem</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-problem">The Problem</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#workflow-instructions">Workflow Instructions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-select-a-file">Step 1 - Select a File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-select-a-curve">Step 2 - Select a Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-push-to-seeq">Step 3 - Push to Seeq</a></li>
 </ul>
 </li>
 </ul>
@@ -89,17 +89,10 @@
              
   <section class="tex2jax_ignore mathjax_ignore" id="user-guide">
 <h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
-<table>
-   <td>
-      <img alt="image" src="_static/step_3.png">
-   </td>
-</table>
-<section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p>A general overview of the motivation for and functionality of Plot Curve, as implemented in
 <strong>seeq-plot-curve</strong> is provided in this section.</p>
 <section id="the-problem">
-<h3>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this headline"></a></h3>
+<h2>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this headline"></a></h2>
 <p>When working with time series data, it is very common to want to create a new signal based on a relationship or function with
 an existing signal.  When the  formula for the calculation is simple and known, it can be directly input into Seeq
 via the formula editor.  But many relationships are empirical in nature, represented by data points which describe the
@@ -124,28 +117,30 @@ of the input signal.  This process can be time consuming and error prone.</p>
 <p><em>Plot Curve</em> is a minimal tool to solve the problem of efficiently fitting tabular data with polynomial functions that can
 be pushed to Seeq as formulas.  It allows for previewing of the functions and manual selection of the polynomial order.</p>
 </section>
-</section>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
-<img src="_static/plot-curve-demo.gif" width="800" height="500" />
-<section id="workflow-instructions">
-<h3>Workflow Instructions<a class="headerlink" href="#workflow-instructions" title="Permalink to this headline"></a></h3>
-<ol class="simple">
+<iframe width="900" height="500" src="_static/plot-curve-demo.mp4" frameborder="0" allowfullscreen></iframe>
+<br/><br/>
+<section id="step-1-select-a-file">
+<h3>Step 1 - Select a File<a class="headerlink" href="#step-1-select-a-file" title="Permalink to this headline"></a></h3>
+<ul class="simple">
 <li><p>Add all relevant dataset signals to the trend view. Any time range is acceptable, but any dependent signals should
 be added to the trend view <em>before</em> launching the Plot Curve Application.</p></li>
+<li></li>
 <li><p>From the Tools tab in Workbench, select Add On Tools followed by <em>PlotCurve</em>.  After a moment the tool will load, you
 will be prompted to select the data to be plotted.  Some instructions are provided on this screen, indicating the
 required file format, and <a class="reference external" href="https://seeq.atlassian.net/wiki/spaces/KB/pages/112761878/Units+of+Measure+UOM">providing a link to supported units</a>.
 <em>Units must be in a Seeq supported format to allow for proper conversion.</em></p></li>
-</ol>
+</ul>
 <table>
    <td>
-      <img alt="image" src="_static/step_2.png" width="800" height="500">
+      <img alt="image" src="_static/step_2.png" width="1000" height="400">
    </td>
 </table>
-<ol class="simple">
-<li><p>Once a file has been selected, the plotting screen is loaded and the following <em>plot curve</em> variables can be adjusted :</p></li>
-</ol>
+</section>
+<section id="step-2-select-a-curve">
+<h3>Step 2 - Select a Curve<a class="headerlink" href="#step-2-select-a-curve" title="Permalink to this headline"></a></h3>
+<p>Once a file has been selected, the plotting screen is loaded and the following <em>plot curve</em> variables can be adjusted :</p>
 <ul class="simple">
 <li><p><em>Selected Curve</em> : This is the selected curve from column 1 of the input file as shown above.</p></li>
 <li><p><em>Independent Variable</em> : This is which variable from the input file should be used as the ‘x’ axis variable.  The units
@@ -156,21 +151,26 @@ Seeq signal will have units corresponding to this variable.</p></li>
 </ul>
 <table>
    <td>
-      <img alt="image" src="_static/step_3.png" width="800" height="500">
+      <img alt="image" src="_static/step_3.png" width="1000" height="400">
    </td>
 </table>
-<ol class="simple">
+</section>
+<section id="step-3-push-to-seeq">
+<h3>Step 3 - Push to Seeq<a class="headerlink" href="#step-3-push-to-seeq" title="Permalink to this headline"></a></h3>
+<ul class="simple">
 <li><p>After a reasonable equation has been fit to the data, the next step is to select a signal from Seeq that will be used
 to calculate the new predicted/dependent variable.  The output signal name should be a unique name signal name as it will be pushed to workbench.</p></li>
 <li><p>Finally, when we are happy with the signal names, and the curve, we can push the formula to Seeq.  After a few minutes,
 the new signal will appear in the active worksheet.  If we have provided signal names for multiple curves, then a dialog
-will ask us if we want to push all signals, or only the active curve.</p></li>
-</ol>
+will ask us if we want to push all signals, or only the active curve.
+<br/></p></li>
+</ul>
 <table>
    <td>
       <img alt="image" src="_static/single_push.png">
    </td>
 </table>
+<br/>
 <table>
    <td>
       <img alt="image" src="_static/multi_push.png">
