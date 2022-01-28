@@ -155,7 +155,7 @@ class ChartComponent(vue.VuetifyTemplate):
         x_units = self.get_active_equation_parameter('x_units')
         y_units = self.get_active_equation_parameter('y_units')
         independent_variable = self.get_active_equation_parameter('independent_variable')
-        dependent_variable = self.get_active_equation_parameter('independent_variable')
+        dependent_variable = self.get_active_equation_parameter('dependent_variable')
 
         figure = plt.figure()
         figure.layout.min_height = '300px'
