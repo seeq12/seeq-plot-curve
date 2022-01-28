@@ -13,14 +13,14 @@ relationship between variables.
 Some examples may include :
 
 - Equipment Curves 
-  - A [pump curve](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pumpsandsystems.com%2Funderstanding-pump-curves&psig=AOvVaw1vTS_8NFaEJZ1ICnwKBoN3&ust=1643391727854000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKD-hrO90vUCFQAAAAAdAAAAABAD) providing the relationships between flow, head, efficiency, etc
-  - A [valve curve](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.industrialcontrolsonline.com%2Ftraining%2Fonline%2Fcontrolling-flow-ball-valves&psig=AOvVaw0_zt9UE6iAyvddeIh4UnAJ&ust=1643391749751000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCOCw6r290vUCFQAAAAAdAAAAABAF) describing the relationship between the flow coefficient of a valve and its opening percentage
+  - A [pump curve](https://www.pumpsandsystems.com/understanding-pump-curves) providing the relationships between flow, head, efficiency, etc
+  - A [valve curve](https://www.industrialcontrolsonline.com/training/online/controlling-flow-ball-valves) describing the relationship between the flow coefficient of a valve and its opening percentage
 - Experimental Data
   - Product properties (i.e. blend ratio properties, property estimation)
-  - Physical effects of additives (i.e. [drag reducing agents](https://www.google.com/url?sa=i&url=https%3A%2F%2Fpdfs.semanticscholar.org%2F2353%2F62a58dbe58225041b237051a0c5bcf878879.pdf&psig=AOvVaw1uwr55SV-C2NGprdLKOe4Q&ust=1643391817067000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCMj-w9690vUCFQAAAAAdAAAAABAD))
+  - Physical effects of additives (i.e. [drag reducing agents](https://pdfs.semanticscholar.org/2353/62a58dbe58225041b237051a0c5bcf878879.pdf))
   
 There also may be many unique curves that we wish to integrate into Seeq, and the units may (or may not) match the units 
-of the input signal.  This process can be time consuming and error prone.
+of the input signal.  This process can be time-consuming and error-prone.
 
 *Plot Curve* is a minimal tool to solve the problem of efficiently fitting tabular data with polynomial functions that can
 be pushed to Seeq as formulas.  It allows for previewing of the functions and manual selection of the polynomial order.
