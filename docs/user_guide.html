@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Guide &mdash; seeq-plot-curve 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/style.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/seeq-favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> seeq-plot-curve
+            <img src="_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0.1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-problem">The Problem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-select-a-file">Step 1 - Select a File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-select-a-curve">Step 2 - Select a Curve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-push-to-seeq">Step 3 - Push to Seeq</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="citation.html">Citation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="github.html">View on GitHub</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">seeq-plot-curve</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>User Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/user_guide.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+<p>A general overview of the motivation for and functionality of Plot Curve, as implemented in
+<strong>seeq-plot-curve</strong> is provided in this section.</p>
+<section id="the-problem">
+<h2>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this headline"></a></h2>
+<p>When working with time series data, it is very common to want to create a new signal based on a relationship or function with
+an existing signal.  When the  formula for the calculation is simple and known, it can be directly input into Seeq
+via the formula editor.  But many relationships are empirical in nature, represented by data points which describe the
+relationship between variables.</p>
+<p>Some examples may include :</p>
+<ul class="simple">
+<li><p>Equipment Curves</p>
+<ul>
+<li><p>A <a class="reference external" href="https://www.pumpsandsystems.com/understanding-pump-curves">pump curve</a> providing the relationships between flow, head, efficiency, etc</p></li>
+<li><p>A <a class="reference external" href="https://www.industrialcontrolsonline.com/training/online/controlling-flow-ball-valves">valve curve</a> describing the relationship between the flow coefficient of a valve and its opening percentage</p></li>
+</ul>
+</li>
+<li><p>Experimental Data</p>
+<ul>
+<li><p>Product properties (i.e. blend ratio properties, property estimation)</p></li>
+<li><p>Physical effects of additives (i.e. <a class="reference external" href="https://pdfs.semanticscholar.org/2353/62a58dbe58225041b237051a0c5bcf878879.pdf">drag reducing agents</a>)</p></li>
+</ul>
+</li>
+</ul>
+<p>There also may be many unique curves that we wish to integrate into Seeq, and the units may (or may not) match the units
+of the input signal.  This process can be time-consuming and error-prone.</p>
+<p><em>Plot Curve</em> is a minimal tool to solve the problem of efficiently fitting tabular data with polynomial functions that can
+be pushed to Seeq as formulas.  It allows for previewing of the functions and manual selection of the polynomial order.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<iframe width="900" height="500" src="_static/plot-curve-demo.mp4" frameborder="0" allowfullscreen></iframe>
+<br/><br/>
+<section id="step-1-select-a-file">
+<h3>Step 1 - Select a File<a class="headerlink" href="#step-1-select-a-file" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Add all relevant dataset signals to the trend view. Any time range is acceptable, but any dependent signals should
+be added to the trend view <em>before</em> launching the Plot Curve Application.</p></li>
+<li></li>
+<li><p>From the Tools tab in Workbench, select Add On Tools followed by <em>PlotCurve</em>.  After a moment the tool will load, you
+will be prompted to select the data to be plotted.  Some instructions are provided on this screen, indicating the
+required file format, and <a class="reference external" href="https://seeq.atlassian.net/wiki/spaces/KB/pages/112761878/Units+of+Measure+UOM">providing a link to supported units</a>.
+<em>Units must be in a Seeq supported format to allow for proper conversion.</em></p></li>
+</ul>
+<table>
+   <td>
+      <img alt="image" src="_static/step_2.png" width="1000" height="400">
+   </td>
+</table>
+</section>
+<section id="step-2-select-a-curve">
+<h3>Step 2 - Select a Curve<a class="headerlink" href="#step-2-select-a-curve" title="Permalink to this headline"></a></h3>
+<p>Once a file has been selected, the plotting screen is loaded and the following <em>plot curve</em> variables can be adjusted :</p>
+<ul class="simple">
+<li><p><em>Selected Curve</em> : This is the selected curve from column 1 of the input file as shown above.</p></li>
+<li><p><em>Independent Variable</em> : This is which variable from the input file should be used as the ‘x’ axis variable.  The units
+of this variable must be compatible with the units of Seeq dependent signal.  See the animated gif for an example.</p></li>
+<li><p><em>Dependent Variable</em> : This is which variable from the input file should be used as the ‘y’ axis variable.  The resulting
+Seeq signal will have units corresponding to this variable.</p></li>
+<li><p><em>Equation Order</em> : This is the order of the polynomial equation to be used for the formula.</p></li>
+</ul>
+<table>
+   <td>
+      <img alt="image" src="_static/step_3.png" width="1000" height="400">
+   </td>
+</table>
+</section>
+<section id="step-3-push-to-seeq">
+<h3>Step 3 - Push to Seeq<a class="headerlink" href="#step-3-push-to-seeq" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>After a reasonable equation has been fit to the data, the next step is to select a signal from Seeq that will be used
+to calculate the new predicted/dependent variable.  The output signal name should be a unique name signal name as it will be pushed to workbench.</p></li>
+<li><p>Finally, when we are happy with the signal names, and the curve, we can push the formula to Seeq.  After a few minutes,
+the new signal will appear in the active worksheet.  If we have provided signal names for multiple curves, then a dialog
+will ask us if we want to push all signals, or only the active curve.
+<br/></p></li>
+</ul>
+<table>
+   <td>
+      <img alt="image" src="_static/single_push.png">
+   </td>
+</table>
+<br/>
+<table>
+   <td>
+      <img alt="image" src="_static/multi_push.png">
+   </td>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Seeq Corporation.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
