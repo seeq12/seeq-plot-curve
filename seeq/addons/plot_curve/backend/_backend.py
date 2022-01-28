@@ -123,6 +123,15 @@ class BackEnd:
         return df
 
     def _validate_unit(self, unit):
+
+        contains_number = any(char.isdigit() for char in unit)
+        contains_exp = '^' in unit
+        if contains_number and not contains_exp:
+            self.message_events.on_next({'type': MessageType.ERROR,
+                                         'message': f'The unit {unit} contains a number but no exponent.  '
+                                                    f'Seeq uses ^ to indicate an exponent.  Before proceeding, '
+                                                    f'please check the units in your data.'})
+
         base_unit = ''.join([i for i in unit if not i.isdigit()]).replace('**', '').replace('^', '')
         if base_unit is not '%':
             try:

@@ -69,8 +69,8 @@ class Equation:
     @tracker(project=__name__)
     def seeq_formula(self):
         conversion = f"$converted_signal = $signal.convertUnits('{self.x_units}').setUnits('')"
-        splice = f"$splicedSignal = $converted_signal.remove($converted_signal." \
-                 f"isNotBetween({str(min(self.x_data))}, {str(max(self.x_data))}))"
+        splice = (f"$splicedSignal = $converted_signal.remove($converted_signal."
+                  f"isNotBetween({str(min(self.x_data))}, {str(max(self.x_data))}))")
         exponents = list(range(len(self._fit_coefficients)))
         exponents.reverse()
         terms = list()

@@ -34,7 +34,9 @@
                 <br/><br/>
                 The format of the csv file is as follows.  The first column indicates which curve the data in that row is assigned to. The remaining columns
                 represent data for that particular curve. Units are provided in the second row.  The below example, shows a csv with a single curve (Pump Curve 1),
-                and two parameters (Flow and Head).  The bold items (Curve and Units) are optional, but recommended to indicate <b>required</b> headers.
+                and two parameters (Flow and Head).  Note that units with exponents require the use of the `^` symbol to denote exponent.
+
+                The bold items (Curve and Units) are optional, but recommended to indicate <b>required</b> headers.
 
                 Automated conversion of units is handled by Seeq provided the
                 <a href='https://seeq.atlassian.net/wiki/spaces/KB/pages/112761878/Units+of+Measure+UOM' target='_blank'>units are supported</a>.
@@ -51,7 +53,7 @@
                   <tbody>
                   <tr>
                     <td color='red'><b>Units</b></td>
-                    <td>m3/hr</td>
+                    <td>m^3/hr</td>
                     <td>m</td>
                   </tr>
                   <tr>
