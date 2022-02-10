@@ -1,5 +1,11 @@
 # Changelog
 
+v0.1.1
+---
+- Caught an unhandled exception which was raised when no units were provided ([#11](https://github.com/seeq12/seeq-plot-curve/issues/11))
+- Fixed a bug where if the curve names were completely numeric it would fail during parsing ([#10](https://github.com/seeq12/seeq-plot-curve/issues/10))
+- Reverted the table view of the data to have an option to change the number of rows viewed at a time.
+
 v0.1.0
 ---
 - Addition of documentation ([#8](https://github.com/seeq12/seeq-plot-curve/issues/8))
