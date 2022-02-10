@@ -87,8 +87,8 @@ class BackEnd:
         self.loaded_dataframe = pd.read_csv(io.StringIO(raw_data), sep=',')
         self.loaded_dataframe = self.validate_dataframe(self.loaded_dataframe)
         self.loaded_dataframe['Curve'] = self.loaded_dataframe['Curve'].ffill()
-        self.units = {k: v for k, v in self.loaded_dataframe.iloc[0].to_dict().items() if v != 'Units'}
-        self.tabs = [x for x in list(self.loaded_dataframe['Curve'].unique()) if x.upper() != 'UNITS']
+        self.units = self.loaded_dataframe.iloc[:1, 1:].to_dict('records')[0]
+        self.tabs = [x for x in list(self.loaded_dataframe.iloc[1:, 0].unique())]
         self.equations = {tab: Equation() for tab in self.tabs}
         self.file_change_events.on_next({'tabs': self.tabs, 'data': self.loaded_dataframe})
 
@@ -128,7 +128,8 @@ class BackEnd:
         # verify units have been provided...
         if len(unit.strip()) == 0 or unit == 'nan':
             self.message_events.on_next({'type': MessageType.ERROR,
-                                         'message': f'Each of the variable columns must have a unit specified.'})
+                                         'message': f'Each of the variable columns must have a specified unit.  '
+                                                    f'Please fix the input file and try again.'})
             return
 
         # verify for exponents, that the carat symbol is used...
