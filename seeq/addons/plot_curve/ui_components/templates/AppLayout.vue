@@ -126,7 +126,7 @@
               window.resizeTo(1200,930)
             }
             if(parseInt(new_step) == 2){
-              window.resizeTo(1200,1320)
+              window.resizeTo(1200,1400)
             }
             }
         },
