@@ -9,6 +9,7 @@ from rx.subject import Subject
 import re
 from pint import UnitRegistry, UndefinedUnitError
 from collections import Counter
+import numpy as np
 
 class BackEnd:
     def __init__(self, workbook, worksheet):
@@ -86,8 +87,8 @@ class BackEnd:
         self.loaded_dataframe = pd.read_csv(io.StringIO(raw_data), sep=',')
         self.loaded_dataframe = self.validate_dataframe(self.loaded_dataframe)
         self.loaded_dataframe['Curve'] = self.loaded_dataframe['Curve'].ffill()
-        self.units = {k: v for k, v in self.loaded_dataframe.iloc[0].to_dict().items() if v != 'Units'}
-        self.tabs = [x for x in list(self.loaded_dataframe['Curve'].unique()) if x.upper() != 'UNITS']
+        self.units = self.loaded_dataframe.iloc[:1, 1:].to_dict('records')[0]
+        self.tabs = [x for x in list(self.loaded_dataframe.iloc[1:, 0].unique())]
         self.equations = {tab: Equation() for tab in self.tabs}
         self.file_change_events.on_next({'tabs': self.tabs, 'data': self.loaded_dataframe})
 
@@ -108,7 +109,7 @@ class BackEnd:
                                                         f'Curves should have at least 3 data points.'})
 
         # validate units...
-        units = [unit for name, unit in df.iloc[0][1:].items()]
+        units = [str(unit) for name, unit in df.iloc[0][1:].items()]
         for unit in units:
             self._validate_unit(unit)
 
@@ -124,6 +125,14 @@ class BackEnd:
 
     def _validate_unit(self, unit):
 
+        # verify units have been provided...
+        if len(unit.strip()) == 0 or unit == 'nan':
+            self.message_events.on_next({'type': MessageType.ERROR,
+                                         'message': f'Each of the variable columns must have a specified unit.  '
+                                                    f'Please fix the input file and try again.'})
+            return
+
+        # verify for exponents, that the carat symbol is used...
         contains_number = any(char.isdigit() for char in unit)
         contains_exp = '^' in unit
         if contains_number and not contains_exp:
@@ -132,13 +141,14 @@ class BackEnd:
                                                     f'Seeq uses ^ to indicate an exponent.  Before proceeding, '
                                                     f'please check the units in your data.'})
 
+        # verify the unit can be parsed by pint
         base_unit = ''.join([i for i in unit if not i.isdigit()]).replace('**', '').replace('^', '')
         if base_unit is not '%':
             try:
                 self.unit_registry.parse_expression(base_unit)
             except UndefinedUnitError:
                 self.message_events.on_next({'type': MessageType.ERROR,
-                                             'message': f'There was an error parsing unit {base_unit}.  Verify'
+                                             'message': f'There was an error parsing unit {base_unit}.  Verify '
                                                         f'that this unit is a valid type prior to proceeding.  The '
                                                         f'first row should contain Variable names, the second must '
                                                         f'contain valid units.'})

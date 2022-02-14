@@ -17,8 +17,6 @@ class TabbedDataFrame(vue.VuetifyTemplate):
     items = traitlets.List().tag(sync=True, allow_null=True)
     file_contents = traitlets.Unicode().tag(sync=True, allow_null=True)
     tabs = traitlets.List([]).tag(sync=True, allow_null=True)
-    footer_props = traitlets.Dict({'disable-items-per-page': True, 'items-per-page-options': [],
-                                   'items-per-page-text': ''}).tag(sync=True, allow_null=False)
 
     def __init__(self, *args,
                  change_active_tab: Callable[[str], None] = None, **kwargs):

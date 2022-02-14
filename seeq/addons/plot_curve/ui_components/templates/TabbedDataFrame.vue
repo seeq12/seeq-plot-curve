@@ -11,7 +11,7 @@
 
     <v-row nogutters>
       <v-layout child-flex>
-        <v-data-table :headers="headers" :items="items" :footer-props="footer_props"
+        <v-data-table :headers="headers" :items="items"
                       :items-per-page="5" hide-default-header>
           <template v-slot:header="{props:{headers}}">
             <thead>
