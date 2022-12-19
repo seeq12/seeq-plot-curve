@@ -13,7 +13,7 @@ matches your Seeq server. For more information on the `seeq` module see [seeq at
 If you want to install **seeq-plot-curve** as a Seeq Add-on Tool, you will need:
 
 - Seeq Data Lab (>= R50.5.0, >=R51.1.0, or >=R52.1.0)
-- `seeq` module whose version matches the Seeq server version
+- Seeq module whose version matches the Seeq server version, and the version of SPy >= 182.25
 - Seeq administrator access
 - Enable Add-on Tools in the Seeq server
 
@@ -25,4 +25,3 @@ file is published as a courtesy to the user, and it does not imply any obligatio
 1. Create a **new** Seeq Data Lab project and open the **Terminal** window
 2. Run `pip install seeq-plot-curve`
 3. Run `python -m seeq.addons.plot_curve [--users <users_list> --groups <groups_list>]`
-

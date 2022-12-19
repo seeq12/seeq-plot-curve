@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>User Guide &mdash; seeq-plot-curve 0.1.1 documentation</title>
+  <title>User Guide &mdash; seeq-plot-curve 0.1.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/style.css" type="text/css" />
@@ -16,7 +16,9 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -33,7 +35,7 @@
             <img src="_static/Seeq_logo_darkBlue_sm.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0.1.1
+                0.1.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -76,8 +78,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>User Guide</li>
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">User Guide</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/user_guide.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -87,12 +89,12 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section class="tex2jax_ignore mathjax_ignore" id="user-guide">
-<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline"></a></h1>
+  <section id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this heading"></a></h1>
 <p>A general overview of the motivation for and functionality of Plot Curve, as implemented in
 <strong>seeq-plot-curve</strong> is provided in this section.</p>
 <section id="the-problem">
-<h2>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this headline"></a></h2>
+<h2>The Problem<a class="headerlink" href="#the-problem" title="Permalink to this heading"></a></h2>
 <p>When working with time series data, it is very common to want to create a new signal based on a relationship or function with
 an existing signal.  When the  formula for the calculation is simple and known, it can be directly input into Seeq
 via the formula editor.  But many relationships are empirical in nature, represented by data points which describe the
@@ -118,11 +120,11 @@ of the input signal.  This process can be time-consuming and error-prone.</p>
 be pushed to Seeq as formulas.  It allows for previewing of the functions and manual selection of the polynomial order.</p>
 </section>
 <section id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this heading"></a></h2>
 <iframe width="900" height="500" src="_static/plot-curve-demo.mp4" frameborder="0" allowfullscreen></iframe>
 <br/><br/>
 <section id="step-1-select-a-file">
-<h3>Step 1 - Select a File<a class="headerlink" href="#step-1-select-a-file" title="Permalink to this headline"></a></h3>
+<h3>Step 1 - Select a File<a class="headerlink" href="#step-1-select-a-file" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add all relevant dataset signals to the trend view. Any time range is acceptable, but any dependent signals should
 be added to the trend view <em>before</em> launching the Plot Curve Application.</p></li>
@@ -139,7 +141,7 @@ required file format, and <a class="reference external" href="https://seeq.atlas
 </table>
 </section>
 <section id="step-2-select-a-curve">
-<h3>Step 2 - Select a Curve<a class="headerlink" href="#step-2-select-a-curve" title="Permalink to this headline"></a></h3>
+<h3>Step 2 - Select a Curve<a class="headerlink" href="#step-2-select-a-curve" title="Permalink to this heading"></a></h3>
 <p>Once a file has been selected, the plotting screen is loaded and the following <em>plot curve</em> variables can be adjusted :</p>
 <ul class="simple">
 <li><p><em>Selected Curve</em> : This is the selected curve from column 1 of the input file as shown above.</p></li>
@@ -156,7 +158,7 @@ Seeq signal will have units corresponding to this variable.</p></li>
 </table>
 </section>
 <section id="step-3-push-to-seeq">
-<h3>Step 3 - Push to Seeq<a class="headerlink" href="#step-3-push-to-seeq" title="Permalink to this headline"></a></h3>
+<h3>Step 3 - Push to Seeq<a class="headerlink" href="#step-3-push-to-seeq" title="Permalink to this heading"></a></h3>
 <ul class="simple">
 <li><p>After a reasonable equation has been fit to the data, the next step is to select a signal from Seeq that will be used
 to calculate the new predicted/dependent variable.  The output signal name should be a unique name signal name as it will be pushed to workbench.</p></li>
