@@ -8,6 +8,7 @@ from seeq.sdk import FormulasApi
 from sympy import S, symbols
 from typing import List
 from seeq.addons.plot_curve.utils import tracker
+import traceback
 
 AVAILABLE_COLORS = {'#1ECBE1', '#E1341E', '#2DD2C0', '#2F2CD3', '#B038C7', '#CA3599', '#9BB847',
                     '#9C6B63', '#63949C', '#E35D1C', '#19E916', '#E11E71', '#C1F50A', '#E1A91E',
@@ -139,20 +140,21 @@ class Equation:
 
         if new_display_item['ID'] in display_items['ID'].values:
             retrieved_workbook.worksheets[0].display_items = display_items.reset_index()
-            spy.workbooks.push(retrieved_workbook, quiet=True)
+            spy.workbooks.push(retrieved_workbook, specific_worksheet_ids=[worksheet], quiet=True)
             raise ValueError(f"The formula is already in the workbook {workbook}")
 
         # push the new display item to seeq, and revert in the case of a unit mismatch...
         try:
             modified_display_items = display_items.append(new_display_item).reset_index()
             retrieved_workbook.worksheets[0].display_items = modified_display_items
-            spy.workbooks.push(retrieved_workbook, quiet=True)
+            spy.workbooks.push(retrieved_workbook, specific_worksheet_ids=[worksheet], quiet=True)
             spy.pull(url, quiet=True)   # will raise an API exception in the case of a unit mismatch...
         except ApiException as e:
             if 'is not compatible with' in e.body:
                 retrieved_workbook.worksheets[0].display_items = display_items.reset_index()
-                spy.workbooks.push(retrieved_workbook, quiet=True)
+                spy.workbooks.push(retrieved_workbook, specific_worksheet_ids=[worksheet], quiet=True)
                 raise
-        except Exception:
+        except Exception as e:
+            print(f'There was an unknown except when modifying the display items : {traceback.format_exc()}')
             raise
 
