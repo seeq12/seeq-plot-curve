@@ -17,3 +17,4 @@ setuptools~=57.4.0
 mixpanel>=4.9.0
 typeguard>=2.13.0
 pint>=0.17.0
+dohq-artifactory==0.8.1

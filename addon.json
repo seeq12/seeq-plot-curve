@@ -1,0 +1,73 @@
+{
+    "identifier": "com.seeq.addons.plot_curve",
+    "name": "Plot Curve",
+    "description": "A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
+    "version": "1.0.0",
+    "license": "Seeq",
+    "icon": "fa fa-edit",
+    "tags": {
+        "maintainer": "Seeq"
+    },
+    "previews": [],
+    "elements": [
+        {
+            "name": "Plot Curve",
+            "identifier": "com.seeq.addons.plot_curve.datalabfunctions",
+            "description":"A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
+            "type": "AddOnTool",
+            "path": "data-lab-functions",
+            "notebook_file_path": "PlotCurve.ipynb",
+            "configuration_schema": {
+                "type": "object",
+                "properties": {
+                    "display": {
+                        "type": "object",
+                        "properties": {
+                            "icon": {
+                                "type": "string",
+                                "default": "fa fa-line-chart"
+                            },
+                            "linkType": {
+                                "enum": [
+                                    "window",
+                                    "tab",
+                                    "none"
+                                ],
+                                "default": "window"
+                            },
+                            "sortKey": {
+                                "type": "string",
+                                "default": "a"
+                            },
+                            "windowDetails": {
+                                "type": "string",
+                                "default": "popup=1,toolbar=0,location=0,left=800,top=200,height=915,width=1200"
+                            },
+                            "reuseWindow": {
+                                "type": "boolean",
+                                "default": false
+                            },
+                            "includeWorkbookParameters": {
+                                "type": "boolean",
+                                "default": true
+                            }
+                        },
+                        "required": [
+                            "icon",
+                            "linkType",
+                            "sortKey",
+                            "windowDetails",
+                            "reuseWindow",
+                            "includeWorkbookParameters"
+                        ]
+                    }
+                },
+                "required": [
+                    "display"
+                ]
+            },
+            "configuration_filename": "config",
+            "configuration_converter": "toml"
+        }
+    ]
+}
