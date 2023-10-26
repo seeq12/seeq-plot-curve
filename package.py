@@ -3,7 +3,6 @@ import os
 import shutil
 import subprocess
 import sys
-# from artifactory import ArtifactoryPath
 from pathlib import Path
 from seeq.addons.plot_curve import __version__
 from zipfile import ZipFile
@@ -61,7 +60,7 @@ def setup_environment():
 def build_backend(): 
     print("Building the backend")
     build_results = subprocess.run(
-        ['python','setup.py','bdist_wheel'],
+        ['python3','setup.py','bdist_wheel'],
         cwd=PARENT_DIR, #only works locally
         **subprocess_kwargs
     )
@@ -143,7 +142,7 @@ def create_addonmetadata():
 def test_packaging(): 
     print("Testing the seeq-plot-curve package")
     test_results = subprocess.run(
-        ['python','test_package.py'],
+        ['python3','test_package.py'],
         cwd=PARENT_DIR
     )
     if test_results.returncode:
