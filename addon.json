@@ -13,6 +13,7 @@
         {
             "name": "Plot Curve",
             "identifier": "com.seeq.addons.plot_curve.datalabfunctions",
+            "known_aliases": ["PlotCurve", "Plot Curve"],
             "description":"A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
             "type": "AddOnTool",
             "path": "data-lab-functions",
