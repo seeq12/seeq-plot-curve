@@ -61,7 +61,7 @@ def setup_environment():
 def build_backend(): 
     print("Building the backend")
     build_results = subprocess.run(
-        ['python3','setup.py','bdist_wheel'],
+        ['python','setup.py','bdist_wheel'],
         cwd=PARENT_DIR, #only works locally
         **subprocess_kwargs
     )
@@ -141,7 +141,15 @@ def create_addonmetadata():
                   arcname='addon.json')
 
 def test_packaging(): 
-    print("Testing will be added post initial PR ")
+    print("Testing the seeq-plot-curve package")
+    test_results = subprocess.run(
+        ['python','test_package.py'],
+        cwd=PARENT_DIR
+    )
+    if test_results.returncode:
+        log_build_error(build_logger,test_results)
+        sys.exit(test_results.returncode)
+    
 
 if __name__ == "__main__" : 
     cleanup()
@@ -151,4 +159,4 @@ if __name__ == "__main__" :
     move_artifacts()
     zip_items()
     create_addonmetadata()
-    # test_packaging() 
+    test_packaging() 

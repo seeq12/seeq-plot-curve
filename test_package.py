@@ -1,0 +1,67 @@
+import logging
+import os
+import shutil
+from seeq.addons.plot_curve import __version__
+from pathlib import Path
+from zipfile import ZipFile
+
+ADDON = "seeq_plot_curve"
+build_logger = logging.getLogger('build')
+build_logger.addHandler(logging.StreamHandler())
+
+
+PARENT_DIR = Path(__file__).resolve().parent
+TEMP_DIR = PARENT_DIR/"temp_folder"
+
+
+final_artifacts = ['data-lab-functions/PlotCurve.ipynb',
+    ('data-lab-functions/seeq_plot_curve-'+__version__+'-py3-none-any.whl'),
+    'data-lab-functions/requirements.txt',
+    'addon.json']
+
+def test_temp_directory():
+    print("Running tests on pre-zipped package")
+    count = 0
+    for artifact in final_artifacts:
+        temp = TEMP_DIR/artifact
+        assert Path.exists(temp), ("Test failure, failed to locate: " + str(artifact) + " in final package")
+        count+=1
+    print("Packaging smoke test verified presence all", count, "of", count, "artifacts for addon: ", ADDON, "in the pre-zipped archive")
+
+
+def test_zipped_package():
+    print("Runing tests on zipped package")
+    version = __version__
+    zipName = "seeq-plot-curve-" + version + ".addon"
+    print ("Extracting zipping files into", zipName)
+
+    zipPath = PARENT_DIR/('seeq-plot-curve-'+version+'.addon')
+
+    if not zipPath.exists():
+        raise Exception("seeq-plot-curve-" + version + ".addon to be used for extraction does not exist")
+
+    with ZipFile(zipPath, 'r') as zip_ref:
+        target_dir = "test_temp_dir"
+        os.makedirs(target_dir, exist_ok =True)
+
+        zip_ref.extractall(target_dir)
+
+    count = 0
+    for artifact in final_artifacts:
+        temp = Path("test_temp_dir")
+        assert Path.exists(temp/ artifact), ("Test failure, failed to locate: " + str(artifact) + " in final package")
+        count+=1
+    print("Packaging smoke test verified presence all", count, "of", count, "artifacts for addon: ", ADDON, " in the final archive.")
+
+    temp_folder_path = "test_temp_dir"
+    try:
+        shutil.rmtree(temp_folder_path)
+        if(not os.path.exists("temp_folder/")):
+            print("Successfully removed temp_folder")
+    except FileNotFoundError:
+        print("Attempting clean up unsuccessful. No temp_folder/ found in: ", ADDON)
+
+
+if __name__ =="__main__":
+    test_temp_directory()
+    test_zipped_package()
