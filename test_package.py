@@ -21,16 +21,21 @@ def configure_version():
     
     current_version = data['version']
     new_version = __version__
+    print("Existing addon version: ", current_version, " incoming addon version: ", new_version)
     final_version = current_version
-    if current_version < new_version:
+    # This step will capture version changes in seeq.addons.plot_curve.__version__
+    # but the addon.json file still will need manual update as good practice for version control 
+    if current_version < new_version: 
         data['version'] = new_version
         final_version = new_version
+        print("Updating addon version to version: ", new_version)
+    else:
+        print("Updating addon version unnecessary")
 
     with open('addon.json', 'w') as file: 
         data = json.dump(data, file)
     
     return final_version 
-    
 
 version = configure_version()
 
