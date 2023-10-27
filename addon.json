@@ -4,19 +4,17 @@
     "description": "A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
     "version": "1.0.0",
     "license": "Seeq",
-    "icon": "fa fa-edit",
-    "tags": {
-        "maintainer": "Seeq"
-    },
+    "icon": "fa fa-line-chart",
+    "maintainer": "Seeq",
     "previews": [],
     "elements": [
         {
             "name": "Plot Curve",
-            "identifier": "com.seeq.addons.plot_curve.datalabfunctions",
+            "identifier": "com.seeq.addons.plot_curve.tool",
             "known_aliases": ["PlotCurve", "Plot Curve"],
             "description":"A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
             "type": "AddOnTool",
-            "path": "data-lab-functions",
+            "path": "add-on-tool",
             "notebook_file_path": "PlotCurve.ipynb",
             "configuration_schema": {
                 "type": "object",

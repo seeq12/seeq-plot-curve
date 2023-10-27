@@ -14,9 +14,9 @@ PARENT_DIR = Path(__file__).resolve().parent
 TEMP_DIR = PARENT_DIR/"temp_folder"
 
 
-final_artifacts = ['data-lab-functions/PlotCurve.ipynb',
-    ('data-lab-functions/seeq_plot_curve-'+__version__+'-py3-none-any.whl'),
-    'data-lab-functions/requirements.txt',
+final_artifacts = ['add-on-tool/PlotCurve.ipynb',
+    ('add-on-tool/seeq_plot_curve-'+__version__+'-py3-none-any.whl'),
+    'add-on-tool/requirements.txt',
     'addon.json']
 
 def test_temp_directory():

@@ -60,7 +60,7 @@ def setup_environment():
 def build_backend(): 
     print("Building the backend")
     build_results = subprocess.run(
-        ['python3','setup.py','bdist_wheel'],
+        ['python','setup.py','bdist_wheel'],
         cwd=PARENT_DIR, #only works locally
         **subprocess_kwargs
     )
@@ -80,7 +80,7 @@ def build_backend():
 
 def generate_requirements_txt():
     print("Generating backend requirements.txt file")
-    path = PARENT_DIR / "temp_folder/data-lab-functions/requirements.txt"
+    path = PARENT_DIR / "temp_folder/add-on-tool/requirements.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
     requirements = 'seeq_plot_curve-'+__version__+'-py3-none-any.whl'
 
@@ -93,8 +93,8 @@ def generate_requirements_txt():
         print("Failed to generate backend requirements.txt")
  
 paths = [
-    [PARENT_DIR/('dist/seeq_plot_curve-'+__version__+'-py3-none-any.whl'), PARENT_DIR/(('temp_folder/data-lab-functions/seeq_plot_curve-'+__version__+'-py3-none-any.whl'))],
-    [PARENT_DIR/'seeq/addons/plot_curve/deployment_notebook/PlotCurve.ipynb',PARENT_DIR/'temp_folder/data-lab-functions/PlotCurve.ipynb'],
+    [PARENT_DIR/('dist/seeq_plot_curve-'+__version__+'-py3-none-any.whl'), PARENT_DIR/(('temp_folder/add-on-tool/seeq_plot_curve-'+__version__+'-py3-none-any.whl'))],
+    [PARENT_DIR/'seeq/addons/plot_curve/deployment_notebook/PlotCurve.ipynb',PARENT_DIR/'temp_folder/add-on-tool/PlotCurve.ipynb'],
     [PARENT_DIR/ 'addon.json',PARENT_DIR/'temp_folder/addon.json']
 ]
 
@@ -126,7 +126,6 @@ def zip_items():
             for file in files:
                 fileName = root + "/"+ file
                 fileName = Path(fileName)
-                print("filename isS: ", fileName)
                 relPath = os.path.relpath(fileName, PARENT_DIR/'temp_folder').replace('\\','/')
                 print("Writing: " , relPath)
                 relPath = Path(relPath) 
@@ -142,7 +141,7 @@ def create_addonmetadata():
 def test_packaging(): 
     print("Testing the seeq-plot-curve package")
     test_results = subprocess.run(
-        ['python3','test_package.py'],
+        ['python','test_package.py'],
         cwd=PARENT_DIR
     )
     if test_results.returncode:

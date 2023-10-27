@@ -69,6 +69,9 @@ generate the documentation in the docs folder, i.e.:
 $ make.bat github
 ```
 
+# Generating a .addon file for use with Add-on Manager 
+To create a .addon, run `python package.py` from the top directory after pip installing all the requirements in requirements.txt (`pip install -r requirements.txt`). It will produce a .addon file in the same directory.
+
 
 # Important links
 
