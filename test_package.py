@@ -1,4 +1,5 @@
 import logging
+import json
 import os
 import shutil
 from seeq.addons.plot_curve import __version__
@@ -12,6 +13,26 @@ build_logger.addHandler(logging.StreamHandler())
 
 PARENT_DIR = Path(__file__).resolve().parent
 TEMP_DIR = PARENT_DIR/"temp_folder"
+
+def configure_version(): 
+    data = None
+    with open ('addon.json', 'r') as file: 
+        data = json.load(file)
+    
+    current_version = data['version']
+    new_version = __version__
+    final_version = current_version
+    if current_version < new_version:
+        data['version'] = new_version
+        final_version = new_version
+
+    with open('addon.json', 'w') as file: 
+        data = json.dump(data, file)
+    
+    return final_version 
+    
+
+version = configure_version()
 
 
 final_artifacts = ['add-on-tool/PlotCurve.ipynb',

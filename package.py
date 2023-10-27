@@ -1,3 +1,4 @@
+import json
 import logging 
 import os
 import shutil
@@ -13,6 +14,31 @@ build_logger.addHandler(logging.StreamHandler())
 PARENT_DIR = Path(__file__).resolve().parent
 ADDON = "seeq_plot_curve"
 custom_env = {"PATH": os.environ.get("PATH")}
+
+def configure_version(): 
+    data = None
+    with open ('addon.json', 'r') as file: 
+        data = json.load(file)
+    
+    current_version = data['version']
+    new_version = __version__
+    print("Existing addon version: ", current_version, " incoming addon version: ", new_version)
+    final_version = current_version
+    # This step will capture version changes in seeq.addons.plot_curve.__version__
+    # but the addon.json file still will need manual update as good practice for version control 
+    if current_version < new_version: 
+        data['version'] = new_version
+        final_version = new_version
+        print("Updating addon version to version: ", new_version)
+    else:
+        print("Updating addon version unnecessary")
+
+    with open('addon.json', 'w') as file: 
+        data = json.dump(data, file)
+    
+    return final_version 
+
+version = configure_version()
 
 subprocess_kwargs = {
     'capture_output': True,
@@ -60,7 +86,7 @@ def setup_environment():
 def build_backend(): 
     print("Building the backend")
     build_results = subprocess.run(
-        ['python3','setup.py','bdist_wheel'],
+        ['python','setup.py','bdist_wheel'],
         cwd=PARENT_DIR, #only works locally
         **subprocess_kwargs
     )
@@ -69,7 +95,7 @@ def build_backend():
         log_build_error(build_logger,build_results)
         sys.exit(build_results.returncode)
     
-    expected_whl_path = PARENT_DIR/('dist/seeq_plot_curve-'+__version__+'-py3-none-any.whl')
+    expected_whl_path = PARENT_DIR/('dist/seeq_plot_curve-'+version+'-py3-none-any.whl')
     if os.path.exists(expected_whl_path):
         print(".whl generated at: ", expected_whl_path)
     else:
@@ -82,7 +108,7 @@ def generate_requirements_txt():
     print("Generating backend requirements.txt file")
     path = PARENT_DIR / "temp_folder/add-on-tool/requirements.txt"
     path.parent.mkdir(parents=True, exist_ok=True)
-    requirements = 'seeq_plot_curve-'+__version__+'-py3-none-any.whl'
+    requirements = 'seeq_plot_curve-'+version+'-py3-none-any.whl'
 
     with open(path, 'w') as f:
         f.write(requirements)
@@ -93,7 +119,7 @@ def generate_requirements_txt():
         print("Failed to generate backend requirements.txt")
  
 paths = [
-    [PARENT_DIR/('dist/seeq_plot_curve-'+__version__+'-py3-none-any.whl'), PARENT_DIR/(('temp_folder/add-on-tool/seeq_plot_curve-'+__version__+'-py3-none-any.whl'))],
+    [PARENT_DIR/('dist/seeq_plot_curve-'+version+'-py3-none-any.whl'), PARENT_DIR/(('temp_folder/add-on-tool/seeq_plot_curve-'+version+'-py3-none-any.whl'))],
     [PARENT_DIR/'seeq/addons/plot_curve/deployment_notebook/PlotCurve.ipynb',PARENT_DIR/'temp_folder/add-on-tool/PlotCurve.ipynb'],
     [PARENT_DIR/ 'addon.json',PARENT_DIR/'temp_folder/addon.json']
 ]
@@ -117,7 +143,7 @@ def move_artifacts():
 
 
 def zip_items():
-    zipName = "seeq-plot-curve-" + __version__ + ".addon"
+    zipName = "seeq-plot-curve-" + version + ".addon"
     print ("Zipping files into", zipName)
 
     with ZipFile(zipName, 'w') as zip:
@@ -133,7 +159,7 @@ def zip_items():
 
 def create_addonmetadata(): 
     addon_path = PARENT_DIR/ 'addon.json'
-    zipName = "seeq-plot-curve-" + __version__ + ".addonmeta"
+    zipName = "seeq-plot-curve-" + version + ".addonmeta"
     with ZipFile(zipName, 'w') as zip: 
         zip.write(addon_path, 
                   arcname='addon.json')
@@ -141,7 +167,7 @@ def create_addonmetadata():
 def test_packaging(): 
     print("Testing the seeq-plot-curve package")
     test_results = subprocess.run(
-        ['python3','test_package.py'],
+        ['python','test_package.py'],
         cwd=PARENT_DIR
     )
     if test_results.returncode:
