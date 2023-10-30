@@ -21,7 +21,13 @@ If you want to install **seeq-plot-curve** as a Seeq Add-on Tool, you will need 
    app notebook which will be available from the deployment folder in Seeq Data Lab.
 4. Verify that the Plot Curve add-on is present in the AddOn menu in workbench.
 
-### Source Installation
+# Development -- Generating a .addon file for drag and droo use with Add-on Manager 
+To create a .addon, run `python package.py` from the top directory after pip installing all the requirements in requirements.txt (`pip install -r requirements.txt`). It will produce a .addon file in the same directory.
+
+# Installation 
+From the Add-on Manager UI, locate the name of the Add-on and click "Install". As of 10/27/2023, this is only available to users with access to the seeq-add-ons-dev-local Jfrog gallery. If you do not have access, use the deprecated source installation steps below.
+
+### DEPRECATED - Source Installation
 
 For development work, it is highly recommended creating a python virtual environment and install the package in that
 working environment. If you are not familiar with python virtual environments, you can take a
@@ -35,7 +41,7 @@ python setup.py install
 
 ----
 
-# Development
+# DEPRECATED - Development
 
 We welcome new contributors of all experience levels.
 
@@ -68,7 +74,6 @@ generate the documentation in the docs folder, i.e.:
 ```sh
 $ make.bat github
 ```
-
 
 # Important links
 
