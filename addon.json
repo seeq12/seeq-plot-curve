@@ -3,7 +3,7 @@
     "name": "Plot Curve",
     "description": "A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
     "version": "0.1.3",
-    "license": "Seeq",
+    "license": "Apache-2.0 license",
     "icon": "fa fa-line-chart",
     "maintainer": "Seeq",
     "previews": [],
