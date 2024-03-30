@@ -1,15 +1,15 @@
 import io
+from collections import Counter
+
+import pandas as pd
+from pint import UndefinedUnitError, UnitRegistry
+from rx.subject import Subject
+
 from seeq import spy
 from seeq.addons.plot_curve.backend import Equation
-from seeq.addons.plot_curve.utils import MessageType
+from seeq.addons.plot_curve.utils import MessageType, tracker
 from seeq.sdk.api_client import ApiException
-from seeq.addons.plot_curve.utils import tracker
-import pandas as pd
-from rx.subject import Subject
-import re
-from pint import UnitRegistry, UndefinedUnitError
-from collections import Counter
-import numpy as np
+
 
 class BackEnd:
     def __init__(self, workbook, worksheet):
@@ -33,27 +33,20 @@ class BackEnd:
     @property
     @tracker(project=__name__)
     def _url(self):
-        return spy.client.host.split('/api')[0] + f'/workbook/{self.workbook}/worksheet/{self.worksheet}'
+        host = spy.client.host.replace('/api','')
+        return  f"{host}/workbook/{self.workbook}/worksheet/{self.worksheet}"
 
     @tracker(project=__name__)
     def get_workbench_signals(self):
         try:
-            return list(spy.pull(self._url, header='Name', quiet=True).columns)
-        except RuntimeError:
-            server_major_version = int(re.search(r'^R?(?:\d+\.)?(\d+)\.(\d+)\.(\d+)(-v\w+)?(-[-\w]+)?',
-                                                 spy.server_version).group(1))
-            spy_major_version = int(spy.__version__.split('.')[0])
-            if server_major_version != spy_major_version:
-                self.message_events.on_next({'type': MessageType.ERROR,
-                                             'message': f'The server version ({spy.server_version}) '
-                                                        f'does not match the SPy version ({spy.__version__}).'
-                                                        f'Please update SPy before proceeding.'})
-        except ValueError:
-            self.message_events.on_next({'type': MessageType.ERROR,
-                                         'message': f'The workbench URL ({self._url}) is invalid.'})
+            return list(spy.pull(self._url, header='Name', quiet=True, errors='catalog').columns)
+
         except KeyError:
             self.message_events.on_next({'type': MessageType.ERROR,
                                          'message': f'The workbench URL ({self._url}) contains no valid signals'})
+        except Exception as e:
+            self.message_events.on_next({'type': MessageType.ERROR,
+                                         'message': f'{str(e)}'})
 
     @tracker(project=__name__)
     def update_active_equation_parameter(self, component, value):
@@ -128,8 +121,8 @@ class BackEnd:
         # verify units have been provided...
         if len(unit.strip()) == 0 or unit == 'nan':
             self.message_events.on_next({'type': MessageType.ERROR,
-                                         'message': f'Each of the variable columns must have a specified unit.  '
-                                                    f'Please fix the input file and try again.'})
+                                         'message': 'Each of the variable columns must have a specified unit.  '
+                                                    'Please fix the input file and try again.'})
             return
 
         # verify for exponents, that the carat symbol is used...
@@ -143,7 +136,7 @@ class BackEnd:
 
         # verify the unit can be parsed by pint
         base_unit = ''.join([i for i in unit if not i.isdigit()]).replace('**', '').replace('^', '')
-        if base_unit is not '%':
+        if base_unit != '%':
             try:
                 self.unit_registry.parse_expression(base_unit)
             except UndefinedUnitError:
@@ -188,7 +181,7 @@ class BackEnd:
         except ApiException as e:
             if 'is already in the workbook' in str(e):
                 self.message_events.on_next({'type': MessageType.ERROR,
-                                             'message': f'An identical formula already exists in the workbook'})
+                                             'message': 'An identical formula already exists in the workbook'})
             elif 'is not compatible with ' in str(e):
                 seeq_signal = self.equations[self.active_tab].independent_signal
                 provided_units = self.equations[self.active_tab].x_units

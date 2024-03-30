@@ -1,14 +1,16 @@
-import numpy as np
-import pandas as pd
 import datetime
 import json
-from seeq import spy
-from seeq.sdk.api_client import ApiException
-from seeq.sdk import FormulasApi
-from sympy import S, symbols
-from typing import List
-from seeq.addons.plot_curve.utils import tracker
 import traceback
+from typing import List
+
+import numpy as np
+import pandas as pd
+from sympy import S, symbols
+
+from seeq import spy
+from seeq.addons.plot_curve.utils import tracker
+from seeq.sdk import FormulasApi
+from seeq.sdk.api_client import ApiException
 
 AVAILABLE_COLORS = {'#1ECBE1', '#E1341E', '#2DD2C0', '#2F2CD3', '#B038C7', '#CA3599', '#9BB847',
                     '#9C6B63', '#63949C', '#E35D1C', '#19E916', '#E11E71', '#C1F50A', '#E1A91E',
@@ -40,8 +42,8 @@ class Equation:
     @tracker(project=__name__)
     def _target_signal(target, workbook, url):
         try:
-            active_signal_names = list(spy.pull(url, header='Name', quiet=True).columns)
-            active_signal_ids = list(spy.pull(url, header='ID', quiet=True).columns)
+            active_signal_names = list(spy.pull(url, header='Name', quiet=True, errors='catalog').columns)
+            active_signal_ids = list(spy.pull(url, header='ID', quiet=True, errors='catalog').columns)
         except KeyError:
             return None
 
@@ -121,9 +123,9 @@ class Equation:
         except Exception as e:
             self.last_formula_run_error = json.loads(e.body)
             if self.last_formula_run_error['errorType'] == 'INCOMPATIBLE_UNITS':
-                raise TypeError(f'The units of the independent variable have a mismatch and are incompatible.')
+                raise TypeError('The units of the independent variable have a mismatch and are incompatible.')
             elif 'is not compatible with' in self.last_formula_run_error['statusMessage']:
-                raise TypeError(f'The units of the independent variable have a mismatch and are incompatible.')
+                raise TypeError('The units of the independent variable have a mismatch and are incompatible.')
             else:
                 raise TypeError(f'Seeq Error : {self.last_formula_run_error["statusMessage"]}')
 
@@ -154,7 +156,7 @@ class Equation:
                 retrieved_workbook.worksheets[0].display_items = display_items.reset_index()
                 spy.workbooks.push(retrieved_workbook, specific_worksheet_ids=[worksheet], quiet=True)
                 raise
-        except Exception as e:
+        except Exception:
             print(f'There was an unknown except when modifying the display items : {traceback.format_exc()}')
             raise
 
