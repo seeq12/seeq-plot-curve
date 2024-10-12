@@ -84,18 +84,6 @@
   </div>
 </template>
 
-<!-- <script>
-export default {
-  name: 'OrderPicker',
-  mounted() {
-    this.$nextTick(() => {
-      if (window.MathJax) {
-        MathJax.Hub.Queue(['Typeset', MathJax.Hub]);
-      }
-    });
-  },
-};
-</script> -->
 <script>
 export default {
   name: 'ChartComponent',
