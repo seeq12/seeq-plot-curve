@@ -22,7 +22,7 @@ class Equation:
     def __init__(self, order: int = None, independent_variable: str = None, dependent_variable: str = None,
                  independent_signal: str = None, output_signal: str = None, x_data: List[float] = None,
                  y_data: List[float] = None, x_units: str = None, y_units: str = None):
-
+        
         self.order = order
         self.independent_variable = independent_variable
         self.dependent_variable = dependent_variable
@@ -56,12 +56,19 @@ class Equation:
     @property
     @tracker(project=__name__)
     def _fit_coefficients(self):
-        return np.polyfit(self.x_data, self.y_data, self.order)
+        if not isinstance(self.order, (int, float)):
+            print(f"Order is not an int or float. Setting order to 0.")
+            self.order = 0
+        if self.order == 0:
+            print("Order is 0. Returning the mean of y_data.")
+            return [np.mean(self.y_data)]
+
+        return np.polyfit(self.x_data, self.y_data, int(self.order))
 
     @property
     @tracker(project=__name__)
     def equation(self):
-        return sum(S("{:.2e}".format(v))*symbols("x")**i for i, v in enumerate(self._fit_coefficients[::-1]))
+        return sum(S("{:.2e}".format(v)) * symbols("x") ** i for i, v in enumerate(self._fit_coefficients[::-1]))
 
     @property
     @tracker(project=__name__)

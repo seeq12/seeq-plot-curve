@@ -1,5 +1,3 @@
-import typing
-
 import ipyvuetify as vue
 import ipywidgets as widgets
 from IPython.display import Math, display_latex
@@ -9,17 +7,19 @@ from pathlib import Path
 from seeq.addons.plot_curve.backend import Equation
 from seeq.addons.plot_curve.utils import threaded
 from seeq.addons.plot_curve.utils import MessageType
-import time
 import traitlets
 import warnings
 from typing import Callable, List, Union, Optional, Any
-from bqplot import pyplot as plt
 from sympy import printing
+import matplotlib.pyplot as plt
+from ipywidgets import Output
 
 CURRENT_DIR = Path(__file__).parent.resolve()
 
 warnings.simplefilter('ignore', np.RankWarning)
 
+def latex_button(latex_repr):
+    return vue.Btn(children=[f"${latex_repr}$"])
 
 class ChartComponent(vue.VuetifyTemplate):
     plot_widget = traitlets.Any().tag(sync=True, **widgets.widget_serialization)
@@ -56,11 +56,15 @@ class ChartComponent(vue.VuetifyTemplate):
 
         super().__init__(*args, **kwargs)
 
-        self.order_picker = vue.BtnToggle(v_model="value", dense=True, toggle_exclusive=True, color='#007960',
-                                          mandatory=True, rounded=True,
-                                          children=[vue.Btn(
-                                                children=[widgets.HTMLMath(f'$${latex_repr}$$')])
-                                                            for latex_repr in Equation.supported_equations()])
+        self.order_picker = vue.BtnToggle(
+            v_model="value", 
+            dense=True, 
+            toggle_exclusive=True, 
+            mandatory=True, 
+            rounded=True,
+            children=[latex_button(equation) for equation in Equation.supported_equations()]
+        )
+
         self.order_picker.v_model = 2
 
         self.output_signal = vue.TextField(hint=f'The signal name given to the formula pushed to Seeq', v_model="",
@@ -150,37 +154,63 @@ class ChartComponent(vue.VuetifyTemplate):
 
     def _construct_plot_widget(self):
 
-        x_data = self.get_active_equation_parameter('x_data')
-        y_data = self.get_active_equation_parameter('y_data')
+
+        # Retrieve data
+        x_data = np.array(self.get_active_equation_parameter('x_data'))
+        y_data = np.array(self.get_active_equation_parameter('y_data'))
+
+        # Sort the data
+        sorted_indices = np.argsort(x_data)
+        x_data_sorted = x_data[sorted_indices]
+        y_data_sorted = y_data[sorted_indices]
+
+        # Other parameters
         x_units = self.get_active_equation_parameter('x_units')
         y_units = self.get_active_equation_parameter('y_units')
         independent_variable = self.get_active_equation_parameter('independent_variable')
         dependent_variable = self.get_active_equation_parameter('dependent_variable')
 
-        figure = plt.figure()
-        figure.layout.min_height = '300px'
-        figure.layout.height = 'auto'
-        figure.layout.width = 'auto'
-        figure.fig_margin = {'top': 20, 'bottom': 70, 'left': 50, 'right': 45}
+        # Define function grid using min and max
+        x_min = x_data_sorted[0]
+        x_max = x_data_sorted[-1]
+        function_grid = np.linspace(x_min, x_max, num=200)
 
-        function_grid = np.linspace(x_data[0], x_data[-1], num=50)
-
+        # Get fitted function
         fitted_func = self.get_fitted_function()
         fitted_data = fitted_func(function_grid)
 
-        plt.scatter(x_data, y_data, colors='darkslategray')
-        plt.plot(function_grid, fitted_data, colors='#007960')
-        plt.xlim(x_data[0] - 0.25 * (x_data[-1] - x_data[0]), x_data[-1] + 0.25 * (x_data[-1] - x_data[0]))
+        # Create an Output widget to capture the plot
+        output = Output()
 
-        figure.axes[0].grid_lines = 'none'
-        figure.axes[1].grid_lines = 'none'
-        figure.axes[0].num_ticks = 8
-        figure.axes[0].label = f"{independent_variable} ({x_units})"
-        figure.axes[1].label = f"{dependent_variable} ({y_units})"
-        figure.axes[0].label_offset = '40px'
-        figure.axes[1].label_offset = '40px'
+        with output:
+            # Create the figure and axis
+            fig, ax = plt.subplots(figsize=(6, 4))
 
-        return figure
+            # Plot the data points
+            ax.scatter(x_data_sorted, y_data_sorted, color='darkslategray', label='Data')
+
+            # Plot the fitted function
+            ax.plot(function_grid, fitted_data, color='#007960', label='Fitted Function')
+
+            # Adjust the x-axis limits
+            x_range = [x_min - 0.25 * (x_max - x_min), x_max + 0.25 * (x_max - x_min)]
+            ax.set_xlim(x_range)
+
+            # Set labels and titles
+            ax.set_xlabel(f"{independent_variable} ({x_units})", labelpad=10)
+            ax.set_ylabel(f"{dependent_variable} ({y_units})", labelpad=10)
+
+            # Customize the plot appearance
+            ax.grid(False)
+            ax.legend()
+
+            # Adjust layout
+            plt.tight_layout()
+
+            # Display the plot
+            plt.show()
+
+        return output
 
     # Event handling methods
     @threaded

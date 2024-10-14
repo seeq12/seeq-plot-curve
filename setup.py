@@ -44,7 +44,6 @@ setup_args = dict(
         "ipyvuetify>=1.8.0",
         "rx>=3.2.0",
         "mpmath>=1.1.0",
-        "bqplot==0.12.31",
         "sympy>=1.9",
         "traitlets>=5.1.0",
         "numpy>=1.19.5",
@@ -52,8 +51,8 @@ setup_args = dict(
         "IPython>=7.29.0",
         "typeguard>=2.13.0",
         "mixpanel>=4.9.0",
-        "typeguard>=2.13.0",
-        "pint>=0.17.0"
+        "pint>=0.17.0",
+        "matplotlib>=3.5.1",
     ],  
     classifiers=[
         "Programming Language :: Python :: 3.7",
