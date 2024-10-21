@@ -16,7 +16,6 @@ from ipywidgets import Output
 
 CURRENT_DIR = Path(__file__).parent.resolve()
 
-warnings.simplefilter('ignore', np.RankWarning)
 
 def latex_button(latex_repr):
     return vue.Btn(children=[f"${latex_repr}$"])
