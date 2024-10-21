@@ -140,10 +140,11 @@ class Equation:
         # push the formula to seeq, and add a new row to the push_output...
         push_output = spy.push(metadata=calculation, workbook=workbook, worksheet=worksheet, quiet=True)
         new_display_item = display_items.iloc[0].copy()
-        for key, val in push_output[['Name', 'ID', 'Type']].to_dict().items():
-            new_display_item[key] = val[0]
+        record = push_output[['Name', 'ID', 'Type']].to_dict(orient='records')[0]
+        for key, val in record.items():
+            new_display_item[key] = val
 
-        non_used_colors = AVAILABLE_COLORS - set(display_items['Color'])
+        non_used_colors = AVAILABLE_COLORS - set(display_items['Color'].dropna())
         new_display_item['Color'] = list(non_used_colors)[0]
         new_display_item['Lane'] = display_items['Lane'].max() + 1
 
@@ -154,7 +155,7 @@ class Equation:
 
         # push the new display item to seeq, and revert in the case of a unit mismatch...
         try:
-            modified_display_items = display_items.append(new_display_item).reset_index()
+            modified_display_items = pd.concat([display_items, new_display_item.to_frame().T]).reset_index(drop=True)
             retrieved_workbook.worksheets[0].display_items = modified_display_items
             spy.workbooks.push(retrieved_workbook, specific_worksheet_ids=[worksheet], quiet=True)
             spy.pull(url, quiet=True)   # will raise an API exception in the case of a unit mismatch...
