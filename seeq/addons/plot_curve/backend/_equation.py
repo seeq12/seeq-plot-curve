@@ -22,7 +22,7 @@ class Equation:
     def __init__(self, order: int = None, independent_variable: str = None, dependent_variable: str = None,
                  independent_signal: str = None, output_signal: str = None, x_data: List[float] = None,
                  y_data: List[float] = None, x_units: str = None, y_units: str = None):
-
+        
         self.order = order
         self.independent_variable = independent_variable
         self.dependent_variable = dependent_variable
@@ -56,12 +56,19 @@ class Equation:
     @property
     @tracker(project=__name__)
     def _fit_coefficients(self):
-        return np.polyfit(self.x_data, self.y_data, self.order)
+        if not isinstance(self.order, (int, float)):
+            print(f"Order is not an int or float. Setting order to 0.")
+            self.order = 0
+        if self.order == 0:
+            print("Order is 0. Returning the mean of y_data.")
+            return [np.mean(self.y_data)]
+
+        return np.polyfit(self.x_data, self.y_data, int(self.order))
 
     @property
     @tracker(project=__name__)
     def equation(self):
-        return sum(S("{:.2e}".format(v))*symbols("x")**i for i, v in enumerate(self._fit_coefficients[::-1]))
+        return sum(S("{:.2e}".format(v)) * symbols("x") ** i for i, v in enumerate(self._fit_coefficients[::-1]))
 
     @property
     @tracker(project=__name__)
@@ -133,10 +140,11 @@ class Equation:
         # push the formula to seeq, and add a new row to the push_output...
         push_output = spy.push(metadata=calculation, workbook=workbook, worksheet=worksheet, quiet=True)
         new_display_item = display_items.iloc[0].copy()
-        for key, val in push_output[['Name', 'ID', 'Type']].to_dict().items():
-            new_display_item[key] = val[0]
+        record = push_output[['Name', 'ID', 'Type']].to_dict(orient='records')[0]
+        for key, val in record.items():
+            new_display_item[key] = val
 
-        non_used_colors = AVAILABLE_COLORS - set(display_items['Color'])
+        non_used_colors = AVAILABLE_COLORS - set(display_items['Color'].dropna())
         new_display_item['Color'] = list(non_used_colors)[0]
         new_display_item['Lane'] = display_items['Lane'].max() + 1
 
@@ -147,7 +155,7 @@ class Equation:
 
         # push the new display item to seeq, and revert in the case of a unit mismatch...
         try:
-            modified_display_items = display_items.append(new_display_item).reset_index()
+            modified_display_items = pd.concat([display_items, new_display_item.to_frame().T]).reset_index(drop=True)
             retrieved_workbook.worksheets[0].display_items = modified_display_items
             spy.workbooks.push(retrieved_workbook, specific_worksheet_ids=[worksheet], quiet=True)
             spy.pull(url, quiet=True)   # will raise an API exception in the case of a unit mismatch...
