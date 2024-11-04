@@ -2,7 +2,7 @@
   "identifier": "com.seeq.addons.plot_curve",
   "name": "Plot Curve",
   "description": "A tool for fitting curves to tabular data and pushing resulting formulas to Seeq",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "license": "Apache-2.0 license",
   "icon": "fa fa-line-chart",
   "maintainer": "Seeq",
@@ -46,19 +46,19 @@
               "reuseWindow",
               "includeWorkbookParameters"
             ]
+          },
+          "advanced_project_configuration": {
+            "type": "object",
+            "properties": {
+              "kernel_name": { "type": "string", "default": "python311" }
+            },
+            "required": ["kernel_name", "advanced_project_configuration"]
           }
         },
         "required": ["display"]
       },
       "configuration_filename": "config",
-      "configuration_converter": "toml",
-      "advanced_project_configuration": {
-        "type": "object",
-        "properties": {
-          "kernel_name": { "type": "string", "default": "python311" }
-        },
-        "required": ["kernel_name"]
-      }
+      "configuration_converter": "toml"
     }
   ]
 }
