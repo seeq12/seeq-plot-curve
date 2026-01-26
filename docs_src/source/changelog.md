@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.7
+
+---
+
+- Fixed a Javascript error in the deployment notebook
+
 ## v0.1.4
 
 ---
