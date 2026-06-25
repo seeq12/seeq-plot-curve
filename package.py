@@ -86,7 +86,7 @@ def setup_environment():
 def build_backend(): 
     print("Building the backend")
     build_results = subprocess.run(
-        ['python3','setup.py','bdist_wheel'],
+        ['python','setup.py','bdist_wheel'],
         cwd=PARENT_DIR, #only works locally
         **subprocess_kwargs
     )
