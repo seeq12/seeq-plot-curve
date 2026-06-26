@@ -22,6 +22,7 @@ from seeq.addons import plot_curve
 project = 'seeq-plot-curve'
 copyright = '2022, Seeq Corporation'
 author = 'Ryan Dolan'
+html_title = 'seeq-plot-curve'
 
 # The full version, including alpha/beta/rc tags
 version = plot_curve.__version__
