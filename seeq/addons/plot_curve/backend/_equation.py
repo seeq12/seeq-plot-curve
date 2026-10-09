@@ -115,12 +115,14 @@ class Equation:
 
         # test unit compatibility with the formula run sdk and exit on any seeq errors...
         formula_sdk = FormulasApi(spy.client)
-        end = datetime.datetime.now()
+        end = datetime.datetime.now(datetime.timezone.utc)
         start = end - datetime.timedelta(days=1)
 
         def iso_datestring(datetime_object):
-            day, time = str(datetime_object).split()
-            return f'{day}T{time}Z'
+            # The 'Z' suffix asserts UTC, so normalise to UTC before formatting. Using a naive
+            # local-time value here would mislabel it as UTC and shift the window by the local
+            # offset (and by a further hour across any DST transition).
+            return datetime_object.astimezone(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
 
         try:
             formula_sdk.run_formula(start=iso_datestring(start),

@@ -1,5 +1,24 @@
 # Changelog
 
+## v0.1.10
+
+---
+
+- Changes for (IANA TZDB 2026e) in the Data Lab Functions so Alberta, Northwest Territories, and Manitoba
+  permanent-time changes effective 2026-11-01 are applied.
+
+## v0.1.9
+
+---
+
+- Fixed Common Vulnerabilities and Exposures (CVEs)
+
+## v0.1.8
+
+---
+
+- Fixed Common Vulnerabilities and Exposures (CVEs)
+
 ## v0.1.7
 
 ---

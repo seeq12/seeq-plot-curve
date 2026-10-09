@@ -53,7 +53,9 @@ setup_args = dict(
         "mixpanel>=4.9.0",
         "pint>=0.17.0",
         "matplotlib>=3.5.1",
-        "pillow>=12.1.1"
+        "pillow>=12.1.1",
+        "tzdata>=2026.5",
+        "pytz>=2026.5"
     ],  
     classifiers=[
         "Programming Language :: Python :: 3.7",
