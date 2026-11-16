@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.1.11
+
+---
+
+- Fixed Common Vulnerabilities and Exposures (CVEs).
+
 ## v0.1.10
 
 ---
