@@ -18,3 +18,5 @@ pint>=0.17.0
 matplotlib>=3.5.1
 tzdata>=2026.5
 pytz>=2026.5
+pillow>=13.0.0
+soupsieve>=4.1.1
