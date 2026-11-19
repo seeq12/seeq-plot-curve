@@ -59,11 +59,11 @@ setup_args = dict(
         "soupsieve>=4.1.1"
     ],  
     classifiers=[
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.7',
+    python_requires='>=3.11.5',
     license='Apache License 2.0'
 )
 
