@@ -1,6 +1,6 @@
 # Installation
 
-The backend of **seeq-plot-curve** requires **Python 3.7** or later.
+The backend of **seeq-plot-curve** requires **Python 3.11** or later.
 
 ## Dependencies
 
